@@ -8,7 +8,7 @@ cd sistacad
 composer install
 ```
 
-Crie um bot no Telegram usando o [BotFather](https://t.me/botfather) com o nome que desejar, precisamos apenas do token.
+Crie um bot no Telegram usando o [@BotFather](https://t.me/botfather) com o nome que desejar, precisamos apenas do token.
 
 Dê start no seu bot e envie uma mensagem qualquer para ele.
 
@@ -33,7 +33,7 @@ SENHA=<senha> # sua senha do sistema acadêmico
 INTERVALO=300 # em segundos
 ```
 
-Execute o arquivo `index.php` e deixe isto eternamente em execução, no dia que tiver atualização nas notas, você receberá uma mensagem no telegram vinda do bot que você criou com um PDF contendo suas notas.
+Execute o arquivo `index.php` e deixe isto eternamente em execução. Você receberá uma mensagem com suas notas atuais. No dia que tiver atualização nas notas, você receberá uma mensagem no telegram vinda do bot que você criou com um PDF contendo suas notas.
 ```bash
 php index.php
 ```
