@@ -31,6 +31,7 @@ CHAT_ID=<id> # seu id do telegram
 MATRICULA=<matricula> #sua matrícula
 SENHA=<senha> # sua senha do sistema acadêmico
 INTERVALO=300 # em segundos
+NEW_STYLE="background-color:#99EE99;" # cor de fundo para as notas novas
 ```
 
 Execute o arquivo `index.php` e deixe isto eternamente em execução. Você receberá uma mensagem com suas notas atuais. No dia que tiver atualização nas notas, você receberá uma mensagem no telegram vinda do bot que você criou com um PDF contendo suas notas.
