@@ -44,5 +44,5 @@ while(true) {
             'caption' => 'Tem nota nova!'
         ]);   }
     $anterior = $notasHTML;
-//     sleep(60*5);
+    sleep(getenv('INTERVALO'));
 }
