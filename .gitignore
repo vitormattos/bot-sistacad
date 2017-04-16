@@ -1,0 +1,7 @@
+vendor
+.env
+
+# eclipse
+.buildpath
+.project
+.settings

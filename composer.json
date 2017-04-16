@@ -1,0 +1,8 @@
+{
+    "require": {
+        "fabpot/goutte": "^3.2",
+        "spipu/html2pdf": "^4.6",
+        "irazasyed/telegram-bot-sdk": "^2.2",
+        "vlucas/phpdotenv": "^2.4"
+    }
+}
