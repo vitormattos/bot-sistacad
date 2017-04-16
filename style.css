@@ -1,0 +1,53 @@
+.RelatorioTitulo {
+    background-color: #f0f2f9;
+    height: 20px;
+}
+TABLE.Relatorio, TABLE.RelatorioOrdenacao {
+    background-color: #FBFCFD !important;
+    background-position: center right;
+    background-repeat: no-repeat;
+    border: 1px solid #F0F2F9 !important;
+    border-collapse: separate !important;
+    border-radius: 2px;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 150, 0.1); */
+    color: #0000AA;
+    margin: 16px 0px 6px 0px;
+    padding: 1px;
+    text-align: center;
+    width: 100%;
+}
+.RelatorioTabelaInterna {
+    width: 100%;
+    text-align: center;
+    padding: 4px;
+}
+.RelatorioRodape {
+    text-align: right;
+    background-color: #f0f2f9;
+}
+.RelatorioErro, SPAN.Erro, .PPPAviso, .Erro {
+    color: #FF101F;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 150, 0.1); */
+    background-color: #fbfcfd;
+}
+table {
+    display: table;
+    background-color: white;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}

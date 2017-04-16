@@ -1,6 +1,8 @@
 <?php
 use Goutte\Client;
 use Telegram\Bot\Api;
+use Phalcon\Diff;
+use Sistacad\Diff\Renderer\Diff_Render;
 
 require 'vendor/autoload.php';
 
@@ -19,34 +21,47 @@ $anterior = null;
 $guzzleClient = new \GuzzleHttp\Client(['timeout' => 60]);
 
 $client->setClient($guzzleClient);
-$crawler = $client->request('POST', 'http://sistacad.cederj.edu.br/inicio.asp', [
+$client->request('POST', 'http://sistacad.cederj.edu.br/inicio.asp', [
     'txtLogin'    => getenv('MATRICULA'),
     'txtPassword' => getenv('SENHA')
 ]);
 
 $count = 0;
 while(true) {
-    echo "\r".($count++);
     if(!isset($idSemestre)) {
-        $semestres = $client->request('POST', 'http://sistacad.cederj.edu.br/notassemestre.asp?ajaxtipo=pega_semestreano');
-        $idSemestre = $semestres->filter('option')->attr('value');
+        $client->request('GET', 'http://sistacad.cederj.edu.br/notassemestre.asp?ajaxtipo=pega_semestreano');
+        $html = $client->getResponse()->getContent();
+        preg_match('/value="(?<idSemestre>[0-9]+)"/', $html, $idSemestre);
+        $idSemestre = $idSemestre['idSemestre'];
     }
 
-    $notas = $client->request('POST', 'http://sistacad.cederj.edu.br/notassemestre.asp?ajaxtipo=pega_notas&osemestreanosel='.$idSemestre);
-    $notasHTML = $notas->getNode(0)->C14N();
-    $notasHTML = str_replace(['&#xD;', '<br></br>'], ['', '<br />'], $notasHTML);
+    $client->request('GET', 'http://sistacad.cederj.edu.br/notassemestre.asp?ajaxtipo=pega_notas&osemestreanosel='.$idSemestre);
+    $notasHTML = $client->getResponse()->getContent();
+    $notasHTML.= '<style>'.file_get_contents('style.css').'</style>';
+    $notasHTML = str_replace(["\r", '<br></br>'], ['', '<br />'], $notasHTML);
+    $notasHTML = trim($notasHTML);
 
     if(!$anterior || $anterior != $notasHTML) {
-        $html2pdf = new HTML2PDF();
-        $html2pdf->writeHTML($notasHTML);
-        @$html2pdf->Output(__DIR__.DIRECTORY_SEPARATOR.getenv('MATRICULA').'.pdf', 'F');
+        $diff = new Diff(
+            explode("\n", $anterior?:$notasHTML),
+            explode("\n", $notasHTML),
+            ['context' => 0]
+        );
+        file_put_contents(
+            getenv('MATRICULA').'.html',
+            $diff->render(new Diff_Render([
+                'style' => getenv('NEW_STYLE')
+            ]))
+        );
 
         $telegram->sendDocument([
             'chat_id' => getenv('CHAT_ID'),
-            'document' => getenv('MATRICULA').'.pdf',
+            'document' => getenv('MATRICULA').'.html',
             'caption' => !$anterior?'Suas notas atuais':'Tem nota nova!'
         ]);
     }
     $anterior = $notasHTML;
+    echo "\rExecução ".(++$count);
+    echo ' próxima execução dentro de '. getenv('INTERVALO') . ' segundos';
     sleep(getenv('INTERVALO'));
 }
