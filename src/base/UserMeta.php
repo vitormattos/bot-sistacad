@@ -20,6 +20,7 @@ class UserMeta
 
         $db = DB::getInstance();
         $sth = $db->prepare($select->getStatement());
-        return $sth->execute($update->getBindValues());
+        $sth->execute($select->getBindValues());
+        return $sth->fetch();
     }
 }

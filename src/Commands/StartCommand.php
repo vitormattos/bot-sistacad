@@ -39,9 +39,7 @@ class StartCommand extends Command
         } else {
             $this->replyWithMessage([
                 'chat_id' => $message->getChat()->getId(),
-                'text' => $e->getCode()
-                    ? $e->getMessage()
-                    : 'Você não está autenticado',
+                'text' => 'Você não está autenticado',
             ]);
         }
     }

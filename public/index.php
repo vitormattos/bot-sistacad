@@ -28,10 +28,4 @@ $telegram->addCommands([
     \Commands\AboutCommand::class
 ]);
 
-$update = $telegram->getWebhookUpdates();
-foreach(['InlineQuery', 'Command'] as $method) {
-    call_user_func([$telegram, 'process'.$method], $update);
-    if($telegram->getLastResponse()) {
-        break;
-    }
-}
+$telegram->commandsHandler(true);
