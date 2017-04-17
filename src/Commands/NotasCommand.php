@@ -69,7 +69,7 @@ class NotasCommand extends Command
         $notasHTML = trim($notasHTML);
 
         file_put_contents(
-            getenv('MATRICULA').'.html',
+            '../storage/'.getenv('MATRICULA').'.html',
             $notasHTML
         );
 
