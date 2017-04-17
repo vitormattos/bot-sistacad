@@ -37,7 +37,7 @@ while(true) {
 
     $client->request('GET', 'http://sistacad.cederj.edu.br/notassemestre.asp?ajaxtipo=pega_notas&osemestreanosel='.$idSemestre);
     $notasHTML = $client->getResponse()->getContent();
-    $notasHTML.= '<style>'.file_get_contents('style.css').'</style>';
+    $notasHTML.= '<style>'.file_get_contents('public/css/style.css').'</style>';
     $notasHTML = str_replace(["\r", '<br></br>'], ['', '<br />'], $notasHTML);
     $notasHTML = trim($notasHTML);
 

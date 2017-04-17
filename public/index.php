@@ -26,7 +26,8 @@ $telegram->addCommands([
     \Commands\StartCommand::class,
     \Commands\LogoutCommand::class,
     \Commands\AboutCommand::class,
-    \Commands\LoginCommand::class
+    \Commands\LoginCommand::class,
+    \Commands\NotasCommand::class
 ]);
 
 $update = $telegram->getWebhookUpdate();
