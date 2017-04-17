@@ -32,13 +32,11 @@ class HelpCommand extends Command
     {
         $UserMeta = new UserMeta();
         $message = $this->update->getMessage();
-        try {
-            $accessToken = $UserMeta->getAccessToken($message->getFrom()->getId());
-        } catch(\Exception $e) {}
-        if($accessToken) {
-            $this->telegram->removeCommand('start');
-        } else {
+        $user = $UserMeta->getUser($message->getFrom()->getId());
+        if($user) {
             $this->telegram->removeCommand('logout');
+        } else {
+            $this->telegram->removeCommand('start');
         }
 
         $commands = $this->telegram->getCommands();
