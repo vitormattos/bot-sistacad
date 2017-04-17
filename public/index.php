@@ -30,7 +30,7 @@ $telegram->addCommands([
 ]);
 
 $update = $telegram->getWebhookUpdate();
-foreach(['CallbackQuery', 'Command'] as $method) {
+foreach(['CallbackQuery', 'Command', 'Message'] as $method) {
     call_user_func([$telegram, 'process'.$method], $update);
     if($telegram->getLastResponse()) {
         break;

@@ -16,7 +16,7 @@ class Api extends \Telegram\Bot\Api
             switch ($query) {
                 case '/login':
                     $this->sendMessage([
-                        'chat_id' => $callbackQuery->getId(),
+                        'chat_id' => $callbackQuery->getFrom()->getId(),
                         'text' => 'Login:',
                         'reply_markup' => Keyboard::forceReply()
                     ]);
@@ -29,5 +29,20 @@ class Api extends \Telegram\Bot\Api
                 'cache_time' => 0,
             ] +  $params
         );
+    }
+    
+    public function processMessage(\Telegram\Bot\Objects\Update $update) {
+        if(!$update->has('message')) {
+            return;
+        }
+        if($update->getMessage()->has('reply_to_message')) {
+            $text = $update->getMessage()->getReplyToMessage()->getText();
+            switch ($text) {
+                case 'Senha:':
+                case 'Login:':
+                    $this->getCommandBus()->handler('/login', $update);
+                    break;
+            }
+        }
     }
 }
