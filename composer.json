@@ -3,11 +3,18 @@
         "fabpot/goutte": "^3.2",
         "irazasyed/telegram-bot-sdk": "^2.2",
         "vlucas/phpdotenv": "^2.4",
-        "phalcongelist/php-diff": "^2.0"
+        "phalcongelist/php-diff": "^2.0",
+        "robmorgan/phinx": "^0.8.0",
+        "aura/sqlquery": "^2.7"
     },
     "autoload": {
         "psr-4": {
-            "Sistacad\\": "src/"
+            "Sistacad\\": "src/",
+            "Commands\\":"src/Commands/",
+            "Base\\":"src/base/"
         }
+    },
+    "scripts": {
+        "post-update-cmd": "vendor/bin/phinx migrate"
     }
 }

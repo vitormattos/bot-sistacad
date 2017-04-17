@@ -16,7 +16,6 @@ if(file_exists('.env')) {
 
 $telegram = new Api();
 $client = new Client();
-$anterior = null;
 
 $guzzleClient = new \GuzzleHttp\Client(['timeout' => 60]);
 
@@ -26,6 +25,7 @@ $client->request('POST', 'http://sistacad.cederj.edu.br/inicio.asp', [
     'txtPassword' => getenv('SENHA')
 ]);
 
+$anterior = null;
 $count = 0;
 while(true) {
     if(!isset($idSemestre)) {
