@@ -4,8 +4,8 @@ use Telegram\Bot\Objects\Update;
 
 require_once '../vendor/autoload.php';
 
-if(file_exists('.env')) {
-    $dotenv = new Dotenv\Dotenv(__DIR__);
+if(file_exists('../.env')) {
+    $dotenv = new Dotenv\Dotenv(__DIR__.'/../');
     $dotenv->load();
 }
 if(getenv('MOCK_JSON')) {
@@ -20,8 +20,6 @@ if(getenv('MOCK_JSON')) {
     $telegram = new Api();
 }
 
-$telegram = new Api();
-
 // Classic commands
 $telegram->addCommands([
     \Commands\HelpCommand::class,
@@ -30,7 +28,7 @@ $telegram->addCommands([
     \Commands\AboutCommand::class
 ]);
 
-$update = $telegram->getWebhookUpdate();
+$update = $telegram->getWebhookUpdates();
 foreach(['InlineQuery', 'Command'] as $method) {
     call_user_func([$telegram, 'process'.$method], $update);
     if($telegram->getLastResponse()) {
