@@ -6,19 +6,19 @@ use Telegram\Bot\Commands\Command;
 use Base\DB;
 use Base\Meetup;
 /**
- * Class LogoutCommand.
+ * Class LoginCommand.
  */
-class LogoutCommand extends Command
+class LoginCommand extends Command
 {
     /**
      * @var string Command Name
      */
-    protected $name = 'logout';
+    protected $name = 'login';
 
     /**
      * @var string Command Description
      */
-    protected $description = 'Desloga do Sistacad';
+    protected $description = 'Autenticar-se';
 
     /**
      * {@inheritdoc}
@@ -28,9 +28,12 @@ class LogoutCommand extends Command
         $message = $this->update->getMessage();
         $telegram_id = $message->getFrom()->getId();
         $db = DB::getInstance();
-        $db->perform('DELETE FROM userdata WHERE telegram_id = :telegram_id', [
-            'telegram_id' => $telegram_id
-        ]);
+        $res = $db->query('SELECT * FROM userdata WHERE telegram_id = :telegram_id', [
+            'telegram_id' => int($telegram_id)
+        ])->fetch();
+        if(!$res) {
+            //$arguments;
+        }
         $this->replyWithMessage([
             'chat_id' => $message->getChat()->getId(),
             'text' =>

@@ -4,9 +4,6 @@ namespace Commands;
 
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Keyboard\Keyboard;
-use Telegram\Bot\Helpers\Emojify;
-use Base\DB;
-use Base\Meetup;
 use Base\UserMeta;
 /**
  * Class StartCommand.
@@ -37,9 +34,22 @@ class StartCommand extends Command
                 'text' => 'Bem vindo!',
             ]);
         } else {
+            $reply_markup = Keyboard::make();
+            $reply_markup->inline();
+            $reply_markup->row(
+                Keyboard::inlineButton([
+                    'text' => 'Login:',
+                    'callback_data' => '/login'
+                ]),
+                Keyboard::inlineButton([
+                    'text' => 'Senha:',
+                    'callback_data' => '/password'
+                ])
+            );
             $this->replyWithMessage([
                 'chat_id' => $message->getChat()->getId(),
-                'text' => 'Você não está autenticado',
+                'text' => 'Você não está autenticado, faça login',
+                'reply_markup' => $reply_markup
             ]);
         }
     }

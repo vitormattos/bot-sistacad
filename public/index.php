@@ -1,6 +1,6 @@
 <?php
-use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
+use Base\Api;
 
 require_once '../vendor/autoload.php';
 
@@ -10,7 +10,7 @@ if(file_exists('../.env')) {
 }
 if(getenv('MOCK_JSON')) {
     class mockApi extends Api{
-        public function getWebhookUpdates($emitUpdateWasReceivedEvent = true) {
+        public function getWebhookUpdate($shouldEmitEvent = true) {
             return new Update(json_decode(getenv('MOCK_JSON'), true));
         }
     }
@@ -25,7 +25,14 @@ $telegram->addCommands([
     \Commands\HelpCommand::class,
     \Commands\StartCommand::class,
     \Commands\LogoutCommand::class,
-    \Commands\AboutCommand::class
+    \Commands\AboutCommand::class,
+    \Commands\LoginCommand::class
 ]);
 
-$telegram->commandsHandler(true);
+$update = $telegram->getWebhookUpdate();
+foreach(['CallbackQuery', 'Command'] as $method) {
+    call_user_func([$telegram, 'process'.$method], $update);
+    if($telegram->getLastResponse()) {
+        break;
+    }
+}
