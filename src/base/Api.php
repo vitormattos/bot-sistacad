@@ -1,6 +1,8 @@
 <?php
 namespace Base;
 
+use Telegram\Bot\Keyboard\Keyboard;
+
 class Api extends \Telegram\Bot\Api
 {
     public function processCallbackQuery(\Telegram\Bot\Objects\Update $update)
@@ -13,7 +15,11 @@ class Api extends \Telegram\Bot\Api
         if($query = $callbackQuery->getData()) {
             switch ($query) {
                 case '/login':
-                    $params['text'] = 'blablabla';
+                    $this->sendMessage([
+                        'chat_id' => $callbackQuery->getId(),
+                        'text' => 'Login:',
+                        'reply_markup' => Keyboard::forceReply()
+                    ]);
                     break;
             }
         }
