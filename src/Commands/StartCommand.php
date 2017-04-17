@@ -31,7 +31,7 @@ class StartCommand extends Command
         if($user = $UserMeta->getUser($telegram_id)) {
             $this->replyWithMessage([
                 'chat_id' => $message->getChat()->getId(),
-                'text' => 'Bem vindo!',
+                'text' => 'Bem vindo '. $user['name'].'!',
             ]);
         } else {
             $reply_markup = Keyboard::make();
