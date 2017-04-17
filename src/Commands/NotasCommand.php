@@ -69,13 +69,13 @@ class NotasCommand extends Command
         $notasHTML = trim($notasHTML);
 
         file_put_contents(
-            '../storage/'.getenv('MATRICULA').'.html',
+            '../storage/'.$user['username'].'.html',
             $notasHTML
         );
 
         $this->telegram->sendDocument([
             'chat_id'  => $telegram_id,
-            'document' => $user['username'].'.html',
+            'document' => '../storage/'.$user['username'].'.html',
             'caption'  => 'Suas notas atuais'
         ]);
     }
